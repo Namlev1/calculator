@@ -43,7 +43,7 @@ body {
     overflow-wrap: break-word;
 }
 
-TODO overflow #display-history {
+#display-history {
     min-height: 32px;
 }
 
@@ -58,7 +58,7 @@ TODO overflow #display-history {
     gap: 1rem;
 }
 
-.equals {
+.grid-col-2-span {
     grid-column: span 2;
 }
 
