@@ -35,6 +35,21 @@ body {
     background-color: #eaeaea;
     border-radius: 16px;
     border: solid black 2px;
+    padding: 10px;
+}
+
+#display>* {
+    text-align: right;
+    overflow-wrap: break-word;
+}
+
+TODO overflow #display-history {
+    min-height: 32px;
+}
+
+#display-current {
+    min-height: 64px;
+    font-size: 40px;
 }
 
 #controls {
