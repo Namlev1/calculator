@@ -43,6 +43,10 @@ body {
     gap: 1rem;
 }
 
+.equals {
+    grid-column: span 2;
+}
+
 button {
     height: 75px;
     padding: 10px;
@@ -50,16 +54,36 @@ button {
     border: 2px solid black;
 }
 
-.equals {
-    grid-column: span 2;
+button:hover {
+    background-color: #ddd;
+}
+
+button:active {
+    background-color: #ccc;
 }
 
 .red-background {
     background-color: rgb(250, 170, 170);
 }
 
+.red-background:hover {
+    background-color: #e99;
+}
+
+.red-background:active {
+    background-color: #d88;
+}
+
 .blue-background {
     background-color: rgb(170, 170, 255);
+}
+
+.blue-background:hover {
+    background-color: #99e;
+}
+
+.blue-background:active {
+    background-color: #88d;
 }
 
 img {
@@ -76,5 +100,5 @@ footer {
     justify-content: center;
     gap: 10px;
     width: 100%;
-    padding: 10px;
+    padding: 10px 0px;
 }
