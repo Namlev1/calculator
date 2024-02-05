@@ -53,7 +53,7 @@ operBtns.forEach(button =>
         }
         else {
             if (currOperation != '=')
-                buffer = eval(currOperation);
+                buffer = round(eval(currOperation));
             prevOperation = currOperation = e.target.textContent;
             refreashCurrDisp = true;
         }
@@ -68,7 +68,7 @@ equalBtn.addEventListener('click', () => {
         return;
     prevOperation = currOperation;
     currOperation = '=';
-    buffer = eval(prevOperation);
+    buffer = round(eval(prevOperation));
     refreashCurrDisp = true;
     let resultText = displayHist.textContent + displayCurr.textContent + '=';
     if (resultText.length > 34)
@@ -101,6 +101,10 @@ function eval(operation) {
         default:
             return Number(displayCurr.textContent);
     }
+}
+
+function round(number) {
+    return Math.round(number * 1000) / 1000
 }
 
 // CLEAR BUTTON
