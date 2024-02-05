@@ -1,6 +1,8 @@
 * {
-    font-family: 'Roboto', sans-serif;
+    font-family: monospace;
     font-size: 20px;
+    font-variant-numeric: slashed-zero;
+    line-height: 1.6;
 }
 
 body {
@@ -22,7 +24,7 @@ body {
     border-radius: 32px;
     flex-grow: 0;
     flex-shrink: 1;
-    width: 400px;
+    width: 450px;
     height: 600px;
     padding: 30px;
     display: flex;
@@ -35,7 +37,7 @@ body {
     background-color: #eaeaea;
     border-radius: 16px;
     border: solid black 2px;
-    padding: 10px;
+    padding: 16px;
 }
 
 #display>* {
@@ -49,7 +51,7 @@ body {
 
 #display-current {
     min-height: 64px;
-    font-size: 40px;
+    font-size: 32px;
 }
 
 #controls {
@@ -102,8 +104,8 @@ button:active {
 }
 
 img {
-    width: 17px;
-    height: 17px;
+    width: 19px;
+    height: 19px;
 }
 
 footer {

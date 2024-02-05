@@ -2,6 +2,7 @@ let buffer = 0;
 let prevOperation = null
 let currOperation = null;
 let refreashCurrDisp = true; // flag
+const MAX_LEN = 20;
 
 const numBtns = document.querySelectorAll('.number');
 const periodBtn = document.querySelector('.period');
@@ -23,14 +24,14 @@ numBtns.forEach(button =>
             displayCurr.textContent = e.target.textContent;
             refreashCurrDisp = false;
         }
-        else
+        else if (displayCurr.textContent.length != MAX_LEN)
             displayCurr.textContent += e.target.textContent;
     })
 );
 
 // PERIOD BUTTON
 periodBtn.addEventListener('click', e => {
-    if (displayCurr.textContent == 'ERROR' || currOperation == '=')
+    if (displayCurr.textContent == 'ERROR' || currOperation == '=' || displayCurr.textContent.length == MAX_LEN)
         return;
     if (displayCurr.textContent == '0' || refreashCurrDisp) {
         displayCurr.textContent = '0' + e.target.textContent;
@@ -56,7 +57,7 @@ operBtns.forEach(button =>
             prevOperation = currOperation = e.target.textContent;
             refreashCurrDisp = true;
         }
-        displayHist.textContent = buffer + ' ' + currOperation;
+        displayHist.textContent = buffer + '' + currOperation;
         displayCurr.textContent = buffer;
     })
 );
@@ -69,7 +70,10 @@ equalBtn.addEventListener('click', () => {
     currOperation = '=';
     buffer = eval(prevOperation);
     refreashCurrDisp = true;
-    displayHist.textContent += ' ' + displayCurr.textContent + ' =';
+    let resultText = displayHist.textContent + displayCurr.textContent + '=';
+    if (resultText.length > 34)
+        resultText = '=';
+    displayHist.textContent = resultText;
     displayCurr.textContent = buffer;
 });
 
