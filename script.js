@@ -1,6 +1,7 @@
 let buffer = 0;
+let prevOperation = null
 let currOperation = null;
-let refreashBuffer = true; // flag
+let refreashCurrDisp = true; // flag
 
 const numBtns = document.querySelectorAll('.number');
 const periodBtn = document.querySelector('.period');
@@ -11,39 +12,109 @@ const CButton = document.querySelector('#C');
 const ACButton = document.querySelector('#AC');
 const equalBtn = document.querySelector('#equal');
 
+// NUMBER BUTTONS
 numBtns.forEach(button =>
     button.addEventListener('click', e => {
-        if (displayCurr.textContent == '0' || refreashBuffer) {
+        if (displayCurr.textContent == 'ERROR')
+            return;
+        if (currOperation == '=')
+            clear();
+        if (displayCurr.textContent == '0' || refreashCurrDisp) {
             displayCurr.textContent = e.target.textContent;
-            refreashBuffer = false;
+            refreashCurrDisp = false;
         }
         else
             displayCurr.textContent += e.target.textContent;
     })
 );
 
+// PERIOD BUTTON
 periodBtn.addEventListener('click', e => {
-    if (displayCurr.textContent == '0' || refreashBuffer) {
+    if (displayCurr.textContent == 'ERROR' || currOperation == '=')
+        return;
+    if (displayCurr.textContent == '0' || refreashCurrDisp) {
         displayCurr.textContent = '0' + e.target.textContent;
-        refreashBuffer = false;
+        refreashCurrDisp = false;
     }
     else
         displayCurr.textContent += e.target.textContent;
-
 })
 
+// OPERATORS
 operBtns.forEach(button =>
     button.addEventListener('click', e => {
-        buffer = Number(displayCurr.textContent);
-        displayHist.textContent = buffer + ' ' + e.target.textContent;
-        refreashBuffer = true;
+        if (displayCurr.textContent == 'ERROR')
+            return;
+
+        if (refreashCurrDisp) {
+            prevOperation = currOperation;
+            currOperation = e.target.textContent;
+        }
+        else {
+            if (currOperation != '=')
+                buffer = eval(currOperation);
+            prevOperation = currOperation = e.target.textContent;
+            refreashCurrDisp = true;
+        }
+        displayHist.textContent = buffer + ' ' + currOperation;
+        displayCurr.textContent = buffer;
     })
 );
 
-CButton.addEventListener('click', () => displayCurr.textContent = '0');
+// EQUAL BUTTON
+equalBtn.addEventListener('click', () => {
+    if (displayCurr.textContent == 'ERROR' || refreashCurrDisp || currOperation == null)
+        return;
+    prevOperation = currOperation;
+    currOperation = '=';
+    buffer = eval(prevOperation);
+    refreashCurrDisp = true;
+    displayHist.textContent += ' ' + displayCurr.textContent + ' =';
+    displayCurr.textContent = buffer;
+});
+
+function eval(operation) {
+    switch (operation) {
+        case '+':
+            return buffer + Number(displayCurr.textContent);
+
+        case '-':
+            return buffer - Number(displayCurr.textContent);
+
+        case 'x':
+            return buffer * Number(displayCurr.textContent);
+
+        case '÷':
+            if (Number(displayCurr.textContent) == 0)
+                return 'ERROR';
+            return buffer / Number(displayCurr.textContent);
+
+        case '%':
+            if (Number(displayCurr.textContent) == 0)
+                return 'ERROR';
+            return buffer % Number(displayCurr.textContent);
+
+        default:
+            return Number(displayCurr.textContent);
+    }
+}
+
+// CLEAR BUTTON
+CButton.addEventListener('click', () => {
+    if (displayCurr.textContent == 'ERROR' || currOperation == '=')
+        return;
+    displayCurr.textContent = '0';
+});
+
+// ALL CLEAR BUTTON
 ACButton.addEventListener('click', () => {
+    clear();
+})
+
+function clear() {
     buffer = 0;
     displayHist.textContent = '';
     displayCurr.textContent = '0';
+    prevOperation = null;
     currOperation = null;
-})
+}
